@@ -13,7 +13,7 @@ docker-compose scale master=1 slave=$COUNT
 echo "5. get slave ip"
 SLAVE_IP=$(docker inspect -f '{{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $(docker ps -aq) | grep slave | awk -F' ' '{print $2}' | tr '\n' ',' | sed 's/.$//')
 echo "6. get wdir"
-WDIR=`docker exec -it master /bin/pwd | tr -d '\r'`
+WDIR=`docker exec master /bin/pwd | tr -d '\r'`
 echo "7. create results"
 mkdir -p results
 
