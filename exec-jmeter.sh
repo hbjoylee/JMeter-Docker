@@ -1,4 +1,5 @@
 #!/bin/bash
+export COMPOSE_INTERACTIVE_NO_CLI=0
 
 COUNT=${1-1}
 
@@ -13,7 +14,7 @@ for filename in scripts/*.jmx; do
     NAME="${NAME%.*}"
     eval "docker cp $filename master:$WDIR/scripts/"
     eval "docker exec -it master /bin/bash -c 'mkdir $NAME && cd $NAME && ../bin/jmeter -n -t ../$filename -R$SLAVE_IP'"
-    eval "docker cp master:$WDIR/$NAME results/"
+    # eval "docker cp master:$WDIR/$NAME results/"
 done
 
 docker-compose stop && docker-compose rm -f
